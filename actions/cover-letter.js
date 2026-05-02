@@ -120,3 +120,4 @@ export async function deleteCoverLetter(id) {
     },
   });
 }
+// updated file

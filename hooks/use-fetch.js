@@ -26,3 +26,4 @@ const useFetch = (cb) => {
 };
 
 export default useFetch;
+//this is use fetch hook

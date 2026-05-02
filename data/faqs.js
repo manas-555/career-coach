@@ -30,3 +30,4 @@ export const faqs = [
       "Yes! While PathWay generates high-quality initial content, you have full control to edit and customize all generated resumes, cover letters, and other content. Our markdown editor makes it easy to refine the content to perfectly match your needs.",
   },
 ];
+//this is faqs
