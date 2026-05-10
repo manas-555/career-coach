@@ -60,6 +60,7 @@ export default async function Header() {
                   <ChevronDown className="h-4 w-4" />
                 </Button>
               </DropdownMenuTrigger>
+              
               <DropdownMenuContent align="end" className="w-48">
                 <DropdownMenuItem asChild>
                   <Link href="/resume" className="flex items-center gap-2">
@@ -80,6 +81,13 @@ export default async function Header() {
                   <Link href="/interview" className="flex items-center gap-2">
                     <GraduationCap className="h-4 w-4" />
                     Interview Prep
+                  </Link>
+                </DropdownMenuItem>
+
+                <DropdownMenuItem asChild>
+                  <Link href="/ai-interview/dashboard" className="flex items-center gap-2">
+                    <GraduationCap className="h-4 w-4" />
+                    Mock Interview
                   </Link>
                 </DropdownMenuItem>
               </DropdownMenuContent>
