@@ -1,0 +1,14 @@
+version: "3.9"
+
+services:
+  pathway:
+    build: .
+    container_name: pathway-ai-career-coach
+
+    ports:
+      - "3000:3000"
+
+    env_file:
+      - .env
+
+    restart: unless-stopped

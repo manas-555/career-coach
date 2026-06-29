@@ -9,6 +9,7 @@ import {
   StarsIcon,
 } from "lucide-react";
 import Link from "next/link";
+import PaymentButton from "./PaymentButton";
 import { SignedIn, SignedOut, SignInButton, UserButton } from "@clerk/nextjs";
 import {
   DropdownMenu,
@@ -38,6 +39,7 @@ export default async function Header() {
         {/* Action Buttons */}
         <div className="flex items-center space-x-2 md:space-x-4">
           <SignedIn>
+            <PaymentButton/>
             <Link href="/dashboard">
               <Button
                 variant="outline"
