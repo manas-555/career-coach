@@ -20,9 +20,14 @@ export default function RootLayout({ children }) {
         baseTheme: dark,
       }}
     >
-      <html lang="en" suppressHydrationWarning>
+      <html lang="en" suppressHydrationWarning className="dark">
         <head>
           <link rel="icon" href="/pathway2.png" sizes="any" />
+          <script
+            dangerouslySetInnerHTML={{
+              __html: `document.documentElement.classList.add('dark')`,
+            }}
+          />
         </head>
         <body className={`${inter.className}`}>
           <ThemeProvider
@@ -30,6 +35,7 @@ export default function RootLayout({ children }) {
             defaultTheme="dark"
             enableSystem
             disableTransitionOnChange
+            forcedTheme="dark"
           >
             <Header />
             <main className="min-h-screen">{children}</main>

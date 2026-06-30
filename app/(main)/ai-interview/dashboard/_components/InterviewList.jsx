@@ -8,19 +8,28 @@ import InterviewItemCard from './InterviewItemCard'
 
 const InterviewList = () => {
 
-    const { user } = useUser();
+    const { user, isLoaded } = useUser();
     const [InterviewList, setInterviewList] = useState([])
+    const [loading, setLoading] = useState(false)
 
     useEffect(() => {
-        user && GetInterviewList();
-
-    }, [user])
+        if (isLoaded && user) {
+            GetInterviewList();
+        }
+    }, [user, isLoaded])
 
 
     const GetInterviewList = async () => {
-        const result = await db.select().from(MockInterview).where(eq(MockInterview.createdBy, user?.primaryEmailAddress.emailAddress)).orderBy(desc(MockInterview.id))
-        console.log(result)
-        setInterviewList(result)
+        try {
+            setLoading(true)
+            const result = await db.select().from(MockInterview).where(eq(MockInterview.createdBy, user?.primaryEmailAddress.emailAddress)).orderBy(desc(MockInterview.id))
+            console.log(result)
+            setInterviewList(result)
+        } catch (error) {
+            console.error('Error fetching interviews:', error)
+        } finally {
+            setLoading(false)
+        }
     }
 
     return (
@@ -28,11 +37,21 @@ const InterviewList = () => {
             <div>
                 <h2 className='font-medium text-xl'>Previous Mock Interview</h2>
 
-                <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3' >
-                 {InterviewList&& InterviewList.map((interview,index)=>(
-                    <div key={index}><InterviewItemCard interview={interview}/></div>
-                 ))}
-                </div>
+                {loading ? (
+                    <div className='flex justify-center items-center py-8'>
+                        <p className='text-muted-foreground'>Loading interviews...</p>
+                    </div>
+                ) : (
+                    <div className='grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 my-3' >
+                        {InterviewList && InterviewList.length > 0 ? (
+                            InterviewList.map((interview, index) => (
+                                <div key={interview.id}><InterviewItemCard interview={interview} /></div>
+                            ))
+                        ) : (
+                            <p className='text-muted-foreground col-span-full'>No interviews yet. Create one to get started!</p>
+                        )}
+                    </div>
+                )}
             </div>
 
         </>

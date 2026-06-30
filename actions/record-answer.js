@@ -39,11 +39,11 @@ export async function saveUserAnswer(data) {
 
     const result = await model.generateContent(feedbackPrompt)
 
-    const response = result.response.text()
+    const response = await result.response.text()
 
     const JsonFeedbackResp = JSON.parse(response)
 
-    const resp = await db.insert(UserAnswer).values({
+    await db.insert(UserAnswer).values({
 
       mockIdRef: data.mockIdRef,
 
@@ -64,7 +64,6 @@ export async function saveUserAnswer(data) {
 
     return {
       success: true,
-      data: resp,
     }
 
   } catch (error) {

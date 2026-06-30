@@ -17,7 +17,13 @@ const QuestionSection = ({ mockInterviewQuestion, activeQuestionIndex, setActive
     <div className='p-5 border rounded-lg my-10'>
       <div className='grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5'>
         {mockInterviewQuestion && mockInterviewQuestion.map((question, index) => (
-          <h2 className={`p-2 bg-secondary rounded-full text-xs md:text-sm text-center cursor-pointer ${activeQuestionIndex == index ? `text-white bg-violet-700 ` : ``}`}>Question #{index + 1}</h2>
+          <button
+            key={index}
+            type='button'
+            onClick={() => setActiveQuestionIndex(index)}
+            className={`p-2 bg-secondary rounded-full text-xs md:text-sm text-center cursor-pointer ${activeQuestionIndex == index ? `text-white bg-violet-700 ` : ``}`}>
+            Question #{index + 1}
+          </button>
         ))}</div>
       <h2 className='my-5 text-sm md:text-lg '>{mockInterviewQuestion[activeQuestionIndex]?.question}</h2>
       <Volume2 className='cursor-pointer' onClick={()=>textToSpeech(mockInterviewQuestion[activeQuestionIndex]?.question)} />

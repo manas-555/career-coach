@@ -25,7 +25,7 @@ const RecordAnswerSection = ({
 }) => {
 
   const [userAnswer, setUserAnswer] = useState("")
-
+  const [recordingQuestionIndex, setRecordingQuestionIndex] = useState(null)
   const [loading, setLoading] = useState(false)
 
   const { user } = useUser()
@@ -68,11 +68,10 @@ const RecordAnswerSection = ({
 
 
   const StartStopRecording = () => {
-
     if (isRecording) {
       stopSpeechToText()
-    }
-    else {
+    } else {
+      setRecordingQuestionIndex(activeQuestionIndex)
       startSpeechToText()
     }
   }
@@ -84,13 +83,14 @@ const RecordAnswerSection = ({
 
       setLoading(true)
 
+      const questionIndex = recordingQuestionIndex ?? activeQuestionIndex
       const result = await saveUserAnswer({
 
         mockIdRef: interviewData?.mockId,
 
-        question: mockInterviewQuestion[activeQuestionIndex]?.question,
+        question: mockInterviewQuestion[questionIndex]?.question,
 
-        correctAns: mockInterviewQuestion[activeQuestionIndex]?.answer,
+        correctAns: mockInterviewQuestion[questionIndex]?.answer,
 
         userAnswer: userAnswer,
 
@@ -102,7 +102,7 @@ const RecordAnswerSection = ({
         toast.success("User Answer recorded successfully")
 
         setUserAnswer("")
-
+        setRecordingQuestionIndex(null)
         setResults([])
       }
 

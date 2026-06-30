@@ -22,10 +22,17 @@ const StartInterview = () => {
     
     const GetInterviewDetails = async () => {
         const result = await db.select().from(MockInterview).where(eq(MockInterview.mockId, interviewId))
-        const jsonMockResp=JSON.parse(result[0].jsonMockResp)
-        setMockInterviewQuestion(jsonMockResp)
-        setInterviewData(result[0])
-        console.log(jsonMockResp)
+        if (!result?.length) return
+
+        const requestedCount = Number(process.env.NEXT_PUBLIC_NUMBER_OF_QUESTIONS || 5)
+        const parsedQuestions = JSON.parse(result[0].jsonMockResp)
+        const normalizedQuestions = Array.isArray(parsedQuestions)
+            ? parsedQuestions.slice(0, requestedCount)
+            : []
+
+        setMockInterviewQuestion(normalizedQuestions)
+        setInterviewData(JSON.parse(JSON.stringify(result[0])))
+        console.log(normalizedQuestions)
     }
 
     return (
